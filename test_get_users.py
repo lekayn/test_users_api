@@ -35,6 +35,7 @@ def test_positive_get_users(params):
     assert response.status_code == 200
     validate(instance=response.json(), schema=get_users_schema)
 
+
 @pytest.mark.parametrize("params", negative_params)
 def test_negative_get_users(params):
     response = requests.get(f"{HOST}/api/users", params=params)

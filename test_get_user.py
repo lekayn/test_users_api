@@ -18,8 +18,8 @@ get_user_schema = {
     },
     "required": ["data"]
 }
-positive_id = [1,2,3]
-negative_id = [-2147483648,-2147483647,-1,0,100,2147483647,2147483648]
+positive_id = [1, 2, 3]
+negative_id = [-2147483648, -2147483647, -1, 0, 100, 2147483647, 2147483648]
 
 
 @pytest.mark.parametrize("id", positive_id)
@@ -28,6 +28,7 @@ def test_positive_get_user(id):
     print(response.json())
     assert response.status_code == 200
     validate(instance=response.json(), schema=get_user_schema)
+
 
 @pytest.mark.parametrize("id", negative_id)
 def test_negative_get_users(id):

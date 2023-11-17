@@ -18,15 +18,19 @@ positive_data = [{"name": "George", "job": "lead_testerrr"},
                  {"name": "Olga", "job": "load_testerrr"},
                  {"name": "Victor", "job": "fun_testerrr"},
                  ]
-id = [1,2]
+id = [1, 2]
 
 negative_data = [{"name": "\n\n\n", "job": "\t\t\t\t"},
-                 {"name": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffv", "job": "12"},
+                 {
+                     "name": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffv",
+                     "job": "12"},
                  {"go": 312, "id": 142, "name": "yo", "das": "dasdkfdfj!!32"},
                  {1: 2, 3: 5, 0: ""},
                  {}
                  ]
-negative_id = ["#", -1, 0, -2343593485938459845645645, "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffv"]
+negative_id = ["#", -1, 0, -2343593485938459845645645,
+               "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffv"]
+
 
 @pytest.mark.parametrize("id", id)
 @pytest.mark.parametrize("data", positive_data)
@@ -43,12 +47,14 @@ def test_positive_patch_user(id, data):
     assert response.status_code == 200
     validate(instance=response.json(), schema=update_user_schema)
 
+
 @pytest.mark.parametrize("id", negative_id)
 @pytest.mark.parametrize("data", negative_data)
 def test_negative_put_user(id, data):
     response = requests.put(f"{HOST}/api/users/", data)
     assert response.status_code == 200
     validate(instance=response.json(), schema=update_user_schema)
+
 
 @pytest.mark.parametrize("id", negative_id)
 @pytest.mark.parametrize("data", negative_data)

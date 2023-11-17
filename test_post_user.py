@@ -28,7 +28,9 @@ positive_data = [{"name": "George", "job": "lead_testerrr"},
                  {"name": "Victor", "job": "fun_testerrr"},
                  ]
 negative_data = [{"name": "\n\n\n", "job": "\t\t\t\t"},
-                 {"name": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffv", "job": "12"},
+                 {
+                     "name": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffv",
+                     "job": "12"},
                  {"go": 312, "id": 142, "name": "yo", "das": "dasdkfdfj!!32"},
                  {1: 2, 3: 5, 0: ""},
                  {}
@@ -40,6 +42,7 @@ def test_positive_post_user(data):
     response = requests.post(f"{HOST}/api/users/", data)
     assert response.status_code == 201
     validate(instance=response.json(), schema=create_user_schema)
+
 
 @pytest.mark.parametrize("data", negative_data)
 def test_negative_post_user(data):
