@@ -38,7 +38,10 @@ def test_positive_put_user(id, data):
     response = requests.put(f"{HOST}/api/users/{id}", data)
     assert response.status_code == 200
     validate(instance=response.json(), schema=update_user_schema)
-
+    # здесь и ниже следовало бы добавить проверку на то, что юзер действительно обновился, но
+    # при запросе получить всех юзеров GET api/users, сервер выдает всегда один и тот же список
+    # хотя и наотправлял новых через POST и наобновлял через PUT|PATCH
+    # вероятно, что стоит заглушка. Поэтому такой проверки нет
 
 @pytest.mark.parametrize("id", id)
 @pytest.mark.parametrize("data", positive_data)

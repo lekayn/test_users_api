@@ -42,11 +42,16 @@ def test_positive_post_user(data):
     response = requests.post(f"{HOST}/api/users/", data)
     assert response.status_code == 201
     validate(instance=response.json(), schema=create_user_schema)
+    # здесь следовало бы добавить проверку на то, что юзер действительно создался, но
+    # при запросе получить всех юзеров GET api/users, сервер выдает всегда один и тот же список
+    # хотя и наотправлял новых через POST.
+    # вероятно, что стоит заглушка. Поэтому такой проверки нет
 
 
 @pytest.mark.parametrize("data", negative_data)
 def test_negative_post_user(data):
     response = requests.post(f"{HOST}/api/users/", data)
     assert response.status_code == 201
-    print(response.json())
     validate(instance=response.json(), schema=negative_create_user_schema)
+    # по этому запросу можно отсылать любые данные, нет обработки ошибочных данных на сервере
+    # кушает всё
